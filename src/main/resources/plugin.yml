@@ -1,0 +1,6 @@
+name: GameShuffle
+version: '${project.version}'
+main: us.unfamousthomas.gameshuffle.GameShuffle
+api-version: 1.18
+authors: [ UnfamousThomas, mastar19 ]
+description: '${project.description}'
