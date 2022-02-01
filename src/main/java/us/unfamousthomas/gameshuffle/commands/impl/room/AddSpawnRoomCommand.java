@@ -36,4 +36,5 @@ public class AddSpawnRoomCommand extends Command {
 
         GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
     }
+    //todo redo loc - cant fully map Location object, need to break it down into pieces. mapping (id nether)
 }
