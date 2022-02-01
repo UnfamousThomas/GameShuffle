@@ -33,6 +33,5 @@ public class AddFinishRoomCommand extends Command {
 
         room.setFinishLocation(sender.getLocation());
 
-        GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
     }
 }

@@ -15,7 +15,8 @@ public class AddRoomCommand extends Command {
         super("room", Rank.DEV);
         addSubcommands(
                 new AddSpawnRoomCommand(),
-                new AddFinishRoomCommand()
+                new AddFinishRoomCommand(),
+                new ListRoomsCommand()
         );
         minArgs = 2;
         maxArgs = 2;
