@@ -1,11 +1,8 @@
 package us.unfamousthomas.gameshuffle;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
-import us.unfamousthomas.gameshuffle.commands.impl.HelpCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
 import us.unfamousthomas.gameshuffle.listeners.AsyncPlayerChatListener;
@@ -13,10 +10,8 @@ import us.unfamousthomas.gameshuffle.listeners.PlayerJoinListener;
 import us.unfamousthomas.gameshuffle.listeners.PlayerQuitListener;
 import us.unfamousthomas.gameshuffle.managers.AccountManager;
 import us.unfamousthomas.gameshuffle.managers.MongoManager;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import us.unfamousthomas.gameshuffle.utils.LogLevel;
+import us.unfamousthomas.gameshuffle.utils.Logger;
 
 public final class GameShuffle extends JavaPlugin {
     private MongoManager mongoManager;
@@ -43,8 +38,7 @@ public final class GameShuffle extends JavaPlugin {
                 new TeleportCommand()
         );
 
-        printLog("System started.");
-
+        Logger.log(LogLevel.SUCCESS, "Successfully started game systems.");
     }
 
     @Override
@@ -67,12 +61,8 @@ public final class GameShuffle extends JavaPlugin {
     public void registerListeners(Listener... listeners) {
         for (Listener l : listeners) {
             this.getServer().getPluginManager().registerEvents(l, this);
-            log("Registered listener: " + l.getClass().getSimpleName());
+            Logger.log(LogLevel.INFO, "Registered listener: " + l.getClass().getSimpleName());
         }
-    }
-
-    public void log(String msg) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6LOG: " + msg));
     }
 
     public void printLog(String log) {
