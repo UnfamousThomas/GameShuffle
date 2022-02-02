@@ -24,16 +24,15 @@ public class ListRoomsCommand extends Command {
         List<Room> roomList = GameShuffle.getInstance().getMongoManager().getRoomDao().find().asList();
         roomList.forEach(room -> {
             TextComponent message = new TextComponent("Room (Spawn TP) - " + room.getId());
-            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + sender.getName() + " " + room.getSpawnLocation().getX() + " " + room.getSpawnLocation().getY() + room.getSpawnLocation().getY()));
+            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp "  + room.getSpawnLocation().getX() + " " + room.getSpawnLocation().getY() + " " + room.getSpawnLocation().getZ()));
             sender.sendMessage(message);
             sender.sendMessage("\n");
 
             TextComponent message2 = new TextComponent("Room (End TP) - " + room.getId());
-            message2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + sender.getName() + " " + room.getFinishLocation().getX() + " " + room.getFinishLocation().getY() + room.getFinishLocation().getY()));
+            message2.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + room.getFinishLocation().getX() + " " + room.getFinishLocation().getY() + " " + room.getFinishLocation().getZ()));
             sender.sendMessage(message2);
             sender.sendMessage("\n");
 
-            //todo add tp cmd
         });
     }
 }

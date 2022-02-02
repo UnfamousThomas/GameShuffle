@@ -6,15 +6,14 @@ import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.commands.Command;
 import us.unfamousthomas.gameshuffle.enums.Message;
 import us.unfamousthomas.gameshuffle.enums.Rank;
-import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 import us.unfamousthomas.gameshuffle.mongo.objects.Account;
+import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 
 import java.util.List;
 
-public class AddSpawnRoomCommand extends Command {
-    public AddSpawnRoomCommand() {
-        super("spawn", Rank.DEV);
-        maxArgs = 1;
+public class DeleteRoomCommand extends Command {
+    public DeleteRoomCommand() {
+        super("delete", Rank.DEV);
     }
 
     @Override
@@ -28,14 +27,13 @@ public class AddSpawnRoomCommand extends Command {
         List<Room> rooms = query.asList();
 
         if(rooms.size() > 1) {
-            sender.sendMessage("Error!");
+            account.sendMessage(Message.ERROR);
             return;
         }
         Room room = rooms.get(0);
 
-        room.setSpawnLocation(sender.getLocation());
 
-        GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
+        GameShuffle.getInstance().getMongoManager().getRoomDao().delete(room);
 
         account.sendMessage(Message.SUCCESS);
 

@@ -16,7 +16,8 @@ public class AddRoomCommand extends Command {
         addSubcommands(
                 new AddSpawnRoomCommand(),
                 new AddFinishRoomCommand(),
-                new ListRoomsCommand()
+                new ListRoomsCommand(),
+                new DeleteRoomCommand()
         );
         minArgs = 2;
         maxArgs = 2;
@@ -40,5 +41,7 @@ public class AddRoomCommand extends Command {
         room.setId(id);
 
         GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
+
+        account.sendMessage(Message.SUCCESS);
     }
 }

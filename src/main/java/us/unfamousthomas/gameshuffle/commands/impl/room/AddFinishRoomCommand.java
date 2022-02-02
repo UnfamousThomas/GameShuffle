@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.mongodb.morphia.query.Query;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.commands.Command;
+import us.unfamousthomas.gameshuffle.enums.Message;
 import us.unfamousthomas.gameshuffle.enums.Rank;
 import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 import us.unfamousthomas.gameshuffle.mongo.objects.Account;
@@ -26,12 +27,16 @@ public class AddFinishRoomCommand extends Command {
         List<Room> rooms = query.asList();
 
         if(rooms.size() > 1) {
-            sender.sendMessage("Error!");
+            account.sendMessage(Message.ERROR);
             return;
         }
         Room room = rooms.get(0);
 
         room.setFinishLocation(sender.getLocation());
+
+        GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
+
+        account.sendMessage(Message.SUCCESS);
 
     }
 }

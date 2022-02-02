@@ -80,7 +80,7 @@ public class Account {
     }
 
     public void sendMessage(Message message) {
-        getPlayer().sendMessage(message.get(getLang()));
+        getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', message.get(getLang())));
     }
 
     public void sendManualMessage(String msg) {

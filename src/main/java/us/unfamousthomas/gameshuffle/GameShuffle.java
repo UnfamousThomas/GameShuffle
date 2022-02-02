@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
 import us.unfamousthomas.gameshuffle.commands.impl.HelpCommand;
+import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
 import us.unfamousthomas.gameshuffle.listeners.AsyncPlayerChatListener;
 import us.unfamousthomas.gameshuffle.listeners.PlayerJoinListener;
@@ -38,12 +39,12 @@ public final class GameShuffle extends JavaPlugin {
         CommandManager.init();
         CommandManager.getInstance().registerCommands(
                 //new HelpCommand(),
-                new AddRoomCommand()
+                new AddRoomCommand(),
+                new TeleportCommand()
         );
 
         printLog("System started.");
 
-        System.out.println(generateLog("System started"));
     }
 
     @Override
@@ -70,7 +71,7 @@ public final class GameShuffle extends JavaPlugin {
         }
     }
 
-    private void log(String msg) {
+    public void log(String msg) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6LOG: " + msg));
     }
 

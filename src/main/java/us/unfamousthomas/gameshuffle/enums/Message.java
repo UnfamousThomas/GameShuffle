@@ -13,6 +13,18 @@ public enum Message implements MessageEnum {
     ),
     HELP(
             "&eKüsi abi meie meeskonnalt!"
+    ),
+    SUCCESS(
+            "&eKäsklus edukalt täidetud!"
+    ),
+    INVALID_ARGUMENTS(
+            "&eKäsklust kasutati õigesti aga mõni argument on vales formaadis."
+    ),
+    PLAYER_OFFLINE(
+            "&eSelle kasutajanimega mängija ei ole hetkel serveriga ühendatud."
+    ),
+    ERROR(
+            "&4Midagi läks valesti käskluse täitmisel!"
     );
 
     private String est;
@@ -32,4 +44,5 @@ public enum Message implements MessageEnum {
     public String get(Lang lang) {
         return est;
     }
+
 }
