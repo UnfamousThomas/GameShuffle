@@ -15,7 +15,6 @@ public class AddRoomCommand extends Command {
         super("room", Rank.DEV);
         addSubcommands(
                 new AddSpawnRoomCommand(),
-                new AddFinishRoomCommand(),
                 new ListRoomsCommand(),
                 new DeleteRoomCommand()
         );

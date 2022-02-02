@@ -20,10 +20,6 @@ public class Room {
     private float pitchSpawn;
     private float yawSpawn;
 
-    private double xEnd;
-    private double zEnd;
-    private double yEnd;
-
     public int getEarnablePoints() {
         return earnablePoints;
     }
@@ -33,9 +29,6 @@ public class Room {
         return new Location(getWorld(), xSpawn, ySpawn, zSpawn, yawSpawn, pitchSpawn);
     }
 
-    public Location getFinishLocation() {
-        return new Location(getWorld(), xEnd, yEnd, zEnd);
-    }
 
     public void setWorld(String world) {
         this.world = world;
@@ -55,11 +48,6 @@ public class Room {
         }
 
         return Bukkit.getWorld(world);
-    }
-    public void setFinishLocation(Location finishLocation) {
-        xEnd = finishLocation.getX();
-        yEnd = finishLocation.getY();
-        zEnd = finishLocation.getZ();
     }
 
     public void setSpawnLocation(Location spawnLocation) {
