@@ -64,6 +64,6 @@ public final class GameShuffle extends JavaPlugin {
             Logger.log(LogLevel.INFO, "Registered listener: " + l.getClass().getSimpleName());
         }
     }
-    
+
 
 }
