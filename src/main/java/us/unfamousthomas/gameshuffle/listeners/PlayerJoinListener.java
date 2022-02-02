@@ -1,5 +1,6 @@
 package us.unfamousthomas.gameshuffle.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -19,6 +20,8 @@ public class PlayerJoinListener implements Listener {
             if(!data.getUsername().equals(e.getPlayer().getName())) {
                 data.setUsername(e.getPlayer().getName());
             }
+
+
         });
 
         if (UUID.fromString("f7ef0cd2-708f-4ac7-8d4b-c007060d5cc0").equals(e.getPlayer().getUniqueId())) {
@@ -30,5 +33,6 @@ public class PlayerJoinListener implements Listener {
         }
 
         e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 3, false, true));
+
     }
 }

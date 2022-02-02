@@ -1,7 +1,9 @@
 package us.unfamousthomas.gameshuffle.game;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import us.unfamousthomas.gameshuffle.GameShuffle;
+import us.unfamousthomas.gameshuffle.managers.scoreboard.GameScoreboard;
 import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 
 import java.util.*;
@@ -10,10 +12,12 @@ public class Arena {
 
     public Arena() {
         loadRooms();
+        loadScoreboard();
     }
     private List<Room> roomList = new ArrayList<>();
     private Map<UUID, Room> currentRoomMap = new HashMap<>();
     private Map<UUID, Integer> pointsMap = new HashMap<>();
+    private GameScoreboard gameScoreboard = new GameScoreboard();
 
 
     public void teleportToNewRoom(Player player) {
@@ -25,8 +29,8 @@ public class Arena {
 
             pointsMap.put(player.getUniqueId(), points);
             player.setLevel(points);
+            gameScoreboard.gainedPoint(player, points);
             room = getNewRoomOldPlayer(player);
-            //todo scoreboard handling
         } else {
             room = getRandomRoom();
         }
@@ -68,6 +72,12 @@ public class Arena {
         GameShuffle.getInstance().getMongoManager().getRoomDao().find().asList().forEach(room -> {
             roomList.add(room);
         });
+    }
+
+    private void loadScoreboard() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+           gameScoreboard.createScoreboardForPlayer(p);
+        }
     }
 
     public Map<UUID, Integer> getPointsMap() {

@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
 import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
+import us.unfamousthomas.gameshuffle.game.Game;
 import us.unfamousthomas.gameshuffle.listeners.AsyncPlayerChatListener;
 import us.unfamousthomas.gameshuffle.listeners.PlayerJoinListener;
 import us.unfamousthomas.gameshuffle.listeners.PlayerQuitListener;
@@ -18,6 +19,7 @@ public final class GameShuffle extends JavaPlugin {
     private AccountManager accountManager;
 
     private static GameShuffle instance;
+    private Game game;
 
     @Override
     public void onEnable() {
@@ -65,5 +67,11 @@ public final class GameShuffle extends JavaPlugin {
         }
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
+    public Game getGame() {
+        return game;
+    }
 }

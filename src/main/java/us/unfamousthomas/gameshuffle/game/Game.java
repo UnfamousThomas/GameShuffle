@@ -7,6 +7,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.ScoreboardManager;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 
 import java.util.*;
@@ -17,8 +18,9 @@ public class Game {
     public Game() {
         this.timeFinishedAt = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5);
         arena = new Arena();
-
         checkEnd();
+        checkNetherite();
+
     }
     private Arena arena;
 
@@ -73,5 +75,6 @@ public class Game {
             }
         }.runTaskTimer(GameShuffle.getInstance(), 10, 15);
     }
+
 
 }
