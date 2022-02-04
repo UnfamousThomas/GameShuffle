@@ -3,6 +3,7 @@ package us.unfamousthomas.gameshuffle.game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import us.unfamousthomas.gameshuffle.GameShuffle;
+import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.managers.scoreboard.GameScoreboard;
 import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 
@@ -22,9 +23,10 @@ public class Arena {
 
     public void teleportToNewRoom(Player player) {
         Room room;
+        Room currentRoom;
         if(currentRoomMap.containsKey(player.getUniqueId())) {
             int points = pointsMap.get(player.getUniqueId());
-            Room currentRoom = currentRoomMap.get(player.getUniqueId());
+            currentRoom = currentRoomMap.get(player.getUniqueId());
             points = points + currentRoom.getEarnablePoints();
 
             pointsMap.put(player.getUniqueId(), points);
@@ -37,6 +39,7 @@ public class Arena {
 
         currentRoomMap.put(player.getUniqueId(), room);
         player.teleport(room.getSpawnLocation());
+        Bukkit.getPluginManager().callEvent(new RoomChangeEvent(room, player));
         player.setBedSpawnLocation(room.getSpawnLocation(), true);
 
     }

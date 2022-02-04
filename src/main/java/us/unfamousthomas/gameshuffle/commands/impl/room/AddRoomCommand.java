@@ -5,6 +5,7 @@ import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.commands.Command;
 import us.unfamousthomas.gameshuffle.enums.Message;
 import us.unfamousthomas.gameshuffle.enums.Rank;
+import us.unfamousthomas.gameshuffle.game.RoomType;
 import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 import us.unfamousthomas.gameshuffle.mongo.objects.Account;
 
@@ -16,8 +17,10 @@ public class AddRoomCommand extends Command {
         addSubcommands(
                 new AddSpawnRoomCommand(),
                 new ListRoomsCommand(),
-                new DeleteRoomCommand()
+                new DeleteRoomCommand(),
+                new SetTypeCommand()
         );
+
         minArgs = 2;
         maxArgs = 2;
     }
@@ -38,6 +41,7 @@ public class AddRoomCommand extends Command {
         Room room = new Room();
         room.setEarnablePoints(points_int);
         room.setId(id);
+        room.setType(RoomType.PARKOUR);
 
         GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
 

@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
 import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
+import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.game.Game;
 import us.unfamousthomas.gameshuffle.listeners.AsyncPlayerChatListener;
 import us.unfamousthomas.gameshuffle.listeners.PlayerJoinListener;
@@ -31,7 +32,8 @@ public final class GameShuffle extends JavaPlugin {
         registerListeners(
                 new PlayerQuitListener(),
                 new PlayerJoinListener(),
-                new AsyncPlayerChatListener()
+                new AsyncPlayerChatListener(),
+                new RoomChangeEvent()
         );
         CommandManager.init();
         CommandManager.getInstance().registerCommands(

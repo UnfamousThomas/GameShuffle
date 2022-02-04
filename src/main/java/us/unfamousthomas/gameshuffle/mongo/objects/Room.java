@@ -3,8 +3,12 @@ package us.unfamousthomas.gameshuffle.mongo.objects;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import us.unfamousthomas.gameshuffle.GameShuffle;
+import us.unfamousthomas.gameshuffle.game.RoomType;
 
 @Entity(value = "rooms", noClassnameStored = true)
 public class Room {
@@ -19,6 +23,9 @@ public class Room {
     private double ySpawn;
     private float pitchSpawn;
     private float yawSpawn;
+
+    private RoomType type;
+    private int time;
 
     public int getEarnablePoints() {
         return earnablePoints;
@@ -36,6 +43,10 @@ public class Room {
 
     public String getId() {
         return id;
+    }
+
+    public RoomType getType() {
+        return type;
     }
 
     public void setEarnablePoints(int earnablePoints) {
@@ -61,5 +72,17 @@ public class Room {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
     }
 }
