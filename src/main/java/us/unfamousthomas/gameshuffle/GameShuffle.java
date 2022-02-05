@@ -1,15 +1,17 @@
 package us.unfamousthomas.gameshuffle;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
+import us.unfamousthomas.gameshuffle.commands.impl.EndGame;
+import us.unfamousthomas.gameshuffle.commands.impl.GamemodeCommand;
+import us.unfamousthomas.gameshuffle.commands.impl.StartGame;
 import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
 import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.game.Game;
-import us.unfamousthomas.gameshuffle.listeners.AsyncPlayerChatListener;
-import us.unfamousthomas.gameshuffle.listeners.PlayerJoinListener;
-import us.unfamousthomas.gameshuffle.listeners.PlayerQuitListener;
+import us.unfamousthomas.gameshuffle.listeners.*;
 import us.unfamousthomas.gameshuffle.managers.AccountManager;
 import us.unfamousthomas.gameshuffle.managers.MongoManager;
 import us.unfamousthomas.gameshuffle.utils.LogLevel;
@@ -33,13 +35,20 @@ public final class GameShuffle extends JavaPlugin {
                 new PlayerQuitListener(),
                 new PlayerJoinListener(),
                 new AsyncPlayerChatListener(),
-                new RoomChangeEvent()
+                new RoomChangeListener(),
+                new PlayerDeathSpawnListener(),
+                new PlayerDestroyPlaceListener(),
+                new PlayerDropListener(),
+                new PlayerInteractListener()
         );
         CommandManager.init();
         CommandManager.getInstance().registerCommands(
                 //new HelpCommand(),
                 new AddRoomCommand(),
-                new TeleportCommand()
+                new TeleportCommand(),
+                new GamemodeCommand(),
+                new EndGame(),
+                new StartGame()
         );
 
         Logger.log(LogLevel.SUCCESS, "Successfully started game systems.");
@@ -73,7 +82,8 @@ public final class GameShuffle extends JavaPlugin {
         this.game = game;
     }
 
+
     public Game getGame() {
-        return game;
+        return this.game;
     }
 }

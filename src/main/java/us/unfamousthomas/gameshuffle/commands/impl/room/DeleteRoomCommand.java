@@ -18,6 +18,15 @@ public class DeleteRoomCommand extends Command {
 
     @Override
     protected void run(Player sender, Account account, List<String> args) {
+        if(args.size() == 1 && args.get(0).equalsIgnoreCase("purge")) {
+            List<Room> roomList = GameShuffle.getInstance().getMongoManager().getRoomDao().find().asList();
+            roomList.forEach(room -> {
+                GameShuffle.getInstance().getMongoManager().getRoomDao().delete(room);
+            });
+            account.sendMessage(Message.SUCCESS);
+            return;
+        }
+
         String id = args.get(0);
 
         Query<Room> query = GameShuffle.getInstance().getMongoManager().getServerData().createQuery(Room.class)

@@ -12,9 +12,9 @@ import us.unfamousthomas.gameshuffle.mongo.objects.Room;
 
 import java.util.List;
 
-public class SetTypeCommand extends Command {
-    public SetTypeCommand() {
-        super("type", Rank.DEV);
+public class SetPointsCommand extends Command {
+    public SetPointsCommand() {
+        super("points", Rank.DEV);
         maxArgs = 2;
     }
 
@@ -34,23 +34,16 @@ public class SetTypeCommand extends Command {
         }
         Room room = rooms.get(0);
 
-        String type = args.get(1).toUpperCase();
-        RoomType roomType = switch (type) {
-            case "PARKOUR" -> RoomType.PARKOUR;
-            case "ELYTRA" -> RoomType.ELYTRA;
-            case "MAZE" -> RoomType.MAZE;
-            case "TIMED" -> RoomType.PARKOUR_TIMED;
-            case "DROPPER" -> RoomType.DROPPER;
-            case "PARKOUR-TIMED" -> RoomType.PARKOUR_TIMED;
-            default -> null;
-        };
-
-        if(roomType == null) {
-            account.sendMessage(Message.ERROR);
+        String points_string = args.get(1).toUpperCase();
+        int points;
+        try {
+            points = Integer.parseInt(points_string);
+        } catch (Exception e) {
+            account.sendMessage(Message.INCORRECT_USAGE);
             return;
         }
 
-        room.setType(roomType);
+        room.setEarnablePoints(points);
 
         GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
 

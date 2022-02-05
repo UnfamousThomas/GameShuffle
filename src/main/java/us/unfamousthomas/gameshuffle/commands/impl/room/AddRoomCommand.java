@@ -18,7 +18,8 @@ public class AddRoomCommand extends Command {
                 new AddSpawnRoomCommand(),
                 new ListRoomsCommand(),
                 new DeleteRoomCommand(),
-                new SetTypeCommand()
+                new SetTypeCommand(),
+                new SetPointsCommand()
         );
 
         minArgs = 2;
@@ -42,6 +43,7 @@ public class AddRoomCommand extends Command {
         room.setEarnablePoints(points_int);
         room.setId(id);
         room.setType(RoomType.PARKOUR);
+        room.setSpawnLocation(sender.getLocation());
 
         GameShuffle.getInstance().getMongoManager().getRoomDao().save(room);
 

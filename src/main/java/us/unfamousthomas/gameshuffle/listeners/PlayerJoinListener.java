@@ -1,6 +1,7 @@
 package us.unfamousthomas.gameshuffle.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -8,6 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.enums.Rank;
+import us.unfamousthomas.gameshuffle.utils.Constant;
 
 import java.util.UUID;
 
@@ -33,6 +35,17 @@ public class PlayerJoinListener implements Listener {
         }
 
         e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 3, false, true));
+
+        if(GameShuffle.getInstance().getGame() != null) {
+            if(!GameShuffle.getInstance().getGame().getPlayersList().contains(e.getPlayer().getUniqueId())) {
+                GameShuffle.getInstance().getGame().setupPlayer(e.getPlayer());
+            }
+        } else {
+            e.getPlayer().teleport(Constant.SPAWN_LOC);
+        }
+        if(e.getPlayer().isOp()) return;
+
+        e.getPlayer().setGameMode(GameMode.ADVENTURE);
 
     }
 }

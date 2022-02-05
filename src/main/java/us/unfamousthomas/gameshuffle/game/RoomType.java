@@ -4,6 +4,7 @@ public enum RoomType {
     PARKOUR,
     ELYTRA,
     MAZE,
-    PARKOUR_TIMED;
+    PARKOUR_TIMED,
+    DROPPER;
 
 }

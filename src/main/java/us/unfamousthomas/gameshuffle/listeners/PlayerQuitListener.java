@@ -10,6 +10,7 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        event.setQuitMessage("");
         GameShuffle shuffle = GameShuffle.getInstance();
         shuffle.getAccountManager().saveAccount(player);
         shuffle.getAccountManager().unloadAccount(player);
