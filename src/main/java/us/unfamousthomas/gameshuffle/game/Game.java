@@ -95,6 +95,7 @@ public class Game {
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 GameShuffle.getInstance().getAccountManager().getAccount(player.getUniqueId()).sendMessage(Message.NOBODY_WON);
+                player.sendTitle(ChatColor.translateAlternateColorCodes('&', "&eMäng Läbi!"), "");
                 player.setLevel(0);
                 player.teleport(Constant.SPAWN_LOC);
                 player.setGameMode(GameMode.ADVENTURE);
