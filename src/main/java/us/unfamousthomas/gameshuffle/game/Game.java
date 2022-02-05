@@ -30,6 +30,8 @@ public class Game {
         checkEnd();
         Logger.log(LogLevel.INFO, "Game started.");
         Bukkit.getOnlinePlayers().forEach(player -> {
+            player.getInventory().clear();
+            player.updateInventory();
             playersList.add(player.getUniqueId());
             ItemStack vili = new ItemStackBuilder(Material.WHITE_WOOL).withName("Jäta Vahele").buildStack();
             player.getInventory().addItem(vili);
@@ -141,42 +143,8 @@ public class Game {
             @Override
             public void run() {
                 //todo tundub et timer ei tööta... Vaata üle!
-                long timeLeft = timeFinishedAt - System.currentTimeMillis();
-                System.out.println(timeLeft);
-                if (timeLeft == 1000 * 60 * 4) {
-                    broadcast("&c4 minutit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 60 * 3) {
-                    broadcast("&c3 minutit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 60 * 2) {
-                    broadcast("&c2 minutit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 60 * 1) {
-                    broadcast("&c1 minut mängu lõpuni.");
-                } else if (timeLeft == 1000 * 30) {
-                    broadcast("&c30 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 20) {
-                    broadcast("&c20 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 10) {
-                    broadcast("&c10 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 9) {
-                    broadcast("&c9 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 8) {
-                    broadcast("&c8 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 7) {
-                    broadcast("&c7 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 6) {
-                    broadcast("&c6 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 5) {
-                    broadcast("&c5 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 4) {
-                    broadcast("&c4 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 3) {
-                    broadcast("&c3 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 2) {
-                    broadcast("&c2 sekundit mängu lõpuni.");
-                } else if (timeLeft == 1000 * 1) {
-                    broadcast("&c1 sekund mängu lõpuni.");
-                }
-                if (timeLeft <= 0) {
+                if (System.currentTimeMillis() >= timeFinishedAt) {
+                    broadcast("&cMäng lõppes!");
                     endGame();
                     cancel();
                 }

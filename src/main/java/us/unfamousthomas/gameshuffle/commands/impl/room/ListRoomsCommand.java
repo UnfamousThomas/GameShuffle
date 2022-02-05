@@ -43,6 +43,10 @@ public class ListRoomsCommand extends Command {
                 sender.sendMessage(message);
                 sender.sendMessage("\n");
             });
+        } else if (args.size() == 1 && args.get(0).equalsIgnoreCase("unfilter")){
+            roomList.forEach(room -> {
+
+            });
         } else {
             account.sendMessage(Message.INVALID_ARGUMENTS);
         }

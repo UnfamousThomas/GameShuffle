@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.managers.scoreboard.GameScoreboard;
@@ -75,11 +76,17 @@ public class Arena {
         player.setLevel(0);
         gameScoreboard.gainedPoint(player, 0, getGame());
         player.teleport(room.getSpawnLocation());
+        Bukkit.getPluginManager().callEvent(new RoomChangeEvent(room, player));
 
     }
 
     public void skipLevel(Player player) {
         Room room = getRandomRoom();
+        if(currentRoomMap.containsKey(player)) {
+            if (room.getId().equals(currentRoomMap.get(player).getId())) {
+                skipLevel(player);
+            }
+        }
         currentRoomMap.put(player.getUniqueId(), room);
         player.setBedSpawnLocation(room.getSpawnLocation(), true);
         player.teleport(room.getSpawnLocation());

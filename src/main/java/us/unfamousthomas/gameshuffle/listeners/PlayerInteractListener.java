@@ -28,9 +28,8 @@ public class PlayerInteractListener implements Listener {
 
                         ItemStack vili =new ItemStackBuilder(Material.WHITE_WOOL).withName("Jäta Vahele").buildStack();
 
-                        while(e.getPlayer().getInventory().containsAtLeast(vili, 1)) {
-                            e.getPlayer().getInventory().removeItem(vili);
-                        }
+                            e.getPlayer().getInventory().remove(vili);
+
                         e.getPlayer().updateInventory();
                         new BukkitRunnable() {
                             @Override

@@ -37,7 +37,8 @@ public final class GameShuffle extends JavaPlugin {
                 new PlayerDeathSpawnListener(),
                 new PlayerDestroyPlaceListener(),
                 new PlayerDropListener(),
-                new PlayerInteractListener()
+                new PlayerInteractListener(),
+                new PlayerDamageListener()
         );
         CommandManager.init();
         CommandManager.getInstance().registerCommands(

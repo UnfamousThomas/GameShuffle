@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.game.RoomType;
 import us.unfamousthomas.gameshuffle.utils.ItemStackBuilder;
@@ -39,11 +40,28 @@ public class PlayerDeathSpawnListener implements Listener {
             e.getPlayer().getInventory().setItemInOffHand(raket);
             e.getPlayer().updateInventory();
 
+        } else {
+            ItemStack elytra = new ItemStackBuilder(Material.ELYTRA).withName(ChatColor.translateAlternateColorCodes('&', "&cTiivad")).makeUnbreakable().withItemFlags(ItemFlag.HIDE_UNBREAKABLE).buildStack();
+            ItemStack raket = new ItemStackBuilder(Material.FIREWORK_ROCKET).withName(ChatColor.translateAlternateColorCodes('&', "&cRakett")).withAmount(20).buildStack();
+
+            e.getPlayer().getInventory().remove(elytra);
+            e.getPlayer().getInventory().remove(raket);
+
+
+            e.getPlayer().updateInventory();
         }
 
         if(e.getPlayer().isOp()) return;
         e.getPlayer().setGameMode(GameMode.ADVENTURE);
 
+        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 3, false, true));
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 3, false, true));
+            }
+        }.runTaskLater(GameShuffle.getInstance(), 20 * 5);
     }
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
