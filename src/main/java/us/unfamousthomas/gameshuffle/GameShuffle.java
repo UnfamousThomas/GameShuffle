@@ -1,6 +1,5 @@
 package us.unfamousthomas.gameshuffle;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.unfamousthomas.gameshuffle.commands.CommandManager;
@@ -9,7 +8,6 @@ import us.unfamousthomas.gameshuffle.commands.impl.GamemodeCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.StartGame;
 import us.unfamousthomas.gameshuffle.commands.impl.TeleportCommand;
 import us.unfamousthomas.gameshuffle.commands.impl.room.AddRoomCommand;
-import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.game.Game;
 import us.unfamousthomas.gameshuffle.listeners.*;
 import us.unfamousthomas.gameshuffle.managers.AccountManager;

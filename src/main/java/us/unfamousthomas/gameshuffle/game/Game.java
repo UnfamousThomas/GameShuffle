@@ -43,6 +43,7 @@ public class Game {
     private Arena arena;
     private Map<UUID, BukkitTask> bukkitTaskMap = new HashMap<>();
     private BukkitTask blockCheck;
+    private BukkitTask endCheck;
 
     private List<UUID> playersList = new ArrayList<>();
     private List<UUID> spectatorList = new ArrayList<>();
@@ -69,6 +70,8 @@ public class Game {
 
     public void endGame() {
         blockCheck.cancel();
+        if(!endCheck.isCancelled()) endCheck.cancel();
+
         arena.endGame();
         if (!checkIfMaxZero()) {
             UUID winner = Collections.max(arena.getPointsMap().entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -134,11 +137,12 @@ public class Game {
     }
 
     private void checkEnd() {
-        new BukkitRunnable() {
+        endCheck = new BukkitRunnable() {
             @Override
             public void run() {
                 //todo tundub et timer ei tööta... Vaata üle!
                 long timeLeft = timeFinishedAt - System.currentTimeMillis();
+                System.out.println(timeLeft);
                 if (timeLeft == 1000 * 60 * 4) {
                     broadcast("&c4 minutit mängu lõpuni.");
                 } else if (timeLeft == 1000 * 60 * 3) {
