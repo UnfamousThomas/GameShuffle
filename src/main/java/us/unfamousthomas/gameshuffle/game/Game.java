@@ -31,7 +31,7 @@ public class Game {
         Logger.log(LogLevel.INFO, "Game started.");
         Bukkit.getOnlinePlayers().forEach(player -> {
             playersList.add(player.getUniqueId());
-            ItemStack vili =new ItemStackBuilder(Material.WHITE_WOOL).withName("Jäta Vahele").buildStack();
+            ItemStack vili = new ItemStackBuilder(Material.WHITE_WOOL).withName("Jäta Vahele").buildStack();
             player.getInventory().addItem(vili);
             player.updateInventory();
             player.setLevel(0);
@@ -39,6 +39,7 @@ public class Game {
         arena = new Arena(this);
         checkNetherite();
     }
+
     private Arena arena;
     private Map<UUID, BukkitTask> bukkitTaskMap = new HashMap<>();
     private BukkitTask blockCheck;
@@ -58,40 +59,41 @@ public class Game {
     private boolean checkIfMaxZero() {
         AtomicBoolean check = new AtomicBoolean(true);
         arena.getPointsMap().forEach((uuid, integer) -> {
-            if(integer > 0) {
+            if (integer > 0) {
                 check.set(false);
             }
         });
 
         return check.get();
     }
+
     public void endGame() {
         blockCheck.cancel();
         arena.endGame();
-        if(!checkIfMaxZero()) {
-        UUID winner = Collections.max(arena.getPointsMap().entrySet(), Map.Entry.comparingByValue()).getKey();
-        String username = Bukkit.getPlayer(winner).getName();
-        int points = arena.getPointsMap().get(winner);
+        if (!checkIfMaxZero()) {
+            UUID winner = Collections.max(arena.getPointsMap().entrySet(), Map.Entry.comparingByValue()).getKey();
+            String username = Bukkit.getPlayer(winner).getName();
+            int points = arena.getPointsMap().get(winner);
 
-        if(checkforExtraWinners(winner)) {
-            String newMessage = Message.WON_MULTIPLE.replace("%points%", String.valueOf(points)).replace("%users%", String.join(", ", getAllWinners(points)));
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendTitle(ChatColor.translateAlternateColorCodes('&', "&eMäng Läbi!"), "");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-                player.setLevel(0);
-                player.teleport(Constant.SPAWN_LOC);
-                player.setGameMode(GameMode.ADVENTURE);
-            });
-        } else {
-            String newMessage = Message.WON_SINGLE.replace("%user%", username).replace("%points%", String.valueOf(points));
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendTitle(ChatColor.translateAlternateColorCodes('&', "&eMäng Läbi!"), "");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
-                player.setLevel(0);
-                player.teleport(Constant.SPAWN_LOC);
-                player.setGameMode(GameMode.ADVENTURE);
-            });
-        }
+            if (checkforExtraWinners(winner)) {
+                String newMessage = Message.WON_MULTIPLE.replace("%points%", String.valueOf(points)).replace("%users%", String.join(", ", getAllWinners(points)));
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.sendTitle(ChatColor.translateAlternateColorCodes('&', "&eMäng Läbi!"), "");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+                    player.setLevel(0);
+                    player.teleport(Constant.SPAWN_LOC);
+                    player.setGameMode(GameMode.ADVENTURE);
+                });
+            } else {
+                String newMessage = Message.WON_SINGLE.replace("%user%", username).replace("%points%", String.valueOf(points));
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.sendTitle(ChatColor.translateAlternateColorCodes('&', "&eMäng Läbi!"), "");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', newMessage));
+                    player.setLevel(0);
+                    player.teleport(Constant.SPAWN_LOC);
+                    player.setGameMode(GameMode.ADVENTURE);
+                });
+            }
         } else {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 GameShuffle.getInstance().getAccountManager().getAccount(player.getUniqueId()).sendMessage(Message.NOBODY_WON);
@@ -112,17 +114,18 @@ public class Game {
         AtomicBoolean extraWinners = new AtomicBoolean(false);
         int points = arena.getPointsMap().get(winner);
         arena.getPointsMap().forEach((uuid, integer) -> {
-            if(uuid != winner && points == integer) {
+            if (uuid != winner && points == integer) {
                 extraWinners.set(true);
             }
         });
 
         return extraWinners.get();
     }
+
     private List<String> getAllWinners(int points) {
         List<String> winners = new ArrayList<>();
         arena.getPointsMap().forEach((uuid, integer) -> {
-            if(integer == points) {
+            if (integer == points) {
                 winners.add(Bukkit.getPlayer(uuid).getName());
             }
         });
@@ -131,7 +134,7 @@ public class Game {
     }
 
     private void checkEnd() {
-    new BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 //todo tundub et timer ei tööta... Vaata üle!
@@ -144,7 +147,7 @@ public class Game {
                     broadcast("&c2 minutit mängu lõpuni.");
                 } else if (timeLeft == 1000 * 60 * 1) {
                     broadcast("&c1 minut mängu lõpuni.");
-                }   else if(timeLeft == 1000 * 30) {
+                } else if (timeLeft == 1000 * 30) {
                     broadcast("&c30 sekundit mängu lõpuni.");
                 } else if (timeLeft == 1000 * 20) {
                     broadcast("&c20 sekundit mängu lõpuni.");
@@ -152,24 +155,24 @@ public class Game {
                     broadcast("&c10 sekundit mängu lõpuni.");
                 } else if (timeLeft == 1000 * 9) {
                     broadcast("&c9 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 8) {
+                } else if (timeLeft == 1000 * 8) {
                     broadcast("&c8 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 7) {
+                } else if (timeLeft == 1000 * 7) {
                     broadcast("&c7 sekundit mängu lõpuni.");
                 } else if (timeLeft == 1000 * 6) {
                     broadcast("&c6 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 5) {
+                } else if (timeLeft == 1000 * 5) {
                     broadcast("&c5 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 4) {
+                } else if (timeLeft == 1000 * 4) {
                     broadcast("&c4 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 3) {
+                } else if (timeLeft == 1000 * 3) {
                     broadcast("&c3 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 2) {
+                } else if (timeLeft == 1000 * 2) {
                     broadcast("&c2 sekundit mängu lõpuni.");
-                }else if (timeLeft == 1000 * 1) {
+                } else if (timeLeft == 1000 * 1) {
                     broadcast("&c1 sekund mängu lõpuni.");
                 }
-                if(timeLeft <= 0) {
+                if (timeLeft <= 0) {
                     endGame();
                     cancel();
                 }
@@ -190,7 +193,7 @@ public class Game {
             System.out.println("ID: " + playerId);
             Player player = Bukkit.getPlayer(playerId);
 
-            if(player != null && player.isOnline()) {
+            if (player != null && player.isOnline()) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             }
         });
@@ -199,15 +202,16 @@ public class Game {
     public void setupPlayer(Player player) {
         arena.setupPlayer(player);
     }
+
     private void checkNetherite() {
         blockCheck = new BukkitRunnable() {
             @Override
             public void run() {
                 playersList.forEach(uuid -> {
                     Player p = Bukkit.getPlayer(uuid);
-                    if(p != null) {
+                    if (p != null) {
                         Block block = p.getLocation().getBlock().getRelative(BlockFace.DOWN);
-                        if(block.getType() == Material.NETHERITE_BLOCK) {
+                        if (block.getType() == Material.NETHERITE_BLOCK) {
                             arena.teleportToNewRoom(p);
                         }
                     }
@@ -222,7 +226,7 @@ public class Game {
 
 
     public void triggerRunnable(Player player, Room room, Account account) {
-        if(bukkitTaskMap.containsKey(player.getUniqueId())) {
+        if (bukkitTaskMap.containsKey(player.getUniqueId())) {
             bukkitTaskMap.get(player.getUniqueId()).cancel();
         }
 

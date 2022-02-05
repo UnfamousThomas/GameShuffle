@@ -14,6 +14,7 @@ import java.util.*;
 public class Arena {
 
     private Game game;
+
     public Arena(Game game) {
         this.game = game;
 
@@ -21,6 +22,7 @@ public class Arena {
         loadScoreboard();
         teleportPlayers();
     }
+
     private List<Room> roomList = new ArrayList<>();
     private Map<UUID, Room> currentRoomMap = new HashMap<>();
     private Map<UUID, Integer> pointsMap = new HashMap<>();
@@ -32,17 +34,18 @@ public class Arena {
         getGame().getPlayersList().forEach(id -> {
             Player p = Bukkit.getPlayer(id);
 
-            if(p != null && p.isOnline()) {
+            if (p != null && p.isOnline()) {
                 gameScoreboard.gainedPoint(p, pointsMap.get(p), getGame());
             }
         });
     }
+
     public void teleportToNewRoom(Player player) {
         Room room;
         Room currentRoom;
-        if(currentRoomMap.containsKey(player.getUniqueId())) {
+        if (currentRoomMap.containsKey(player.getUniqueId())) {
             int points = 0;
-            if(pointsMap.containsKey(player.getUniqueId())) {
+            if (pointsMap.containsKey(player.getUniqueId())) {
                 points = pointsMap.get(player.getUniqueId());
             }
             currentRoom = currentRoomMap.get(player.getUniqueId());
@@ -84,6 +87,7 @@ public class Arena {
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 7 * 20, 500, false, true));
 
     }
+
     public Game getGame() {
         return game;
     }
@@ -91,12 +95,12 @@ public class Arena {
     private Room getNewRoomOldPlayer(Player player) {
         Room room = getRandomRoom();
         Room currentRoom = currentRoomMap.get(player.getUniqueId());
-        if(room.getId().equals(currentRoom.getId())) {
+        if (room.getId().equals(currentRoom.getId())) {
             getNewRoomOldPlayer(player);
         }
 
         return room;
-        }
+    }
 
     public Room getRandomRoom() {
         Random rand = new Random();
@@ -123,7 +127,7 @@ public class Arena {
 
     private void loadScoreboard() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-           gameScoreboard.createScoreboardForPlayer(p, getGame());
+            gameScoreboard.createScoreboardForPlayer(p, getGame());
         }
     }
 
@@ -133,11 +137,12 @@ public class Arena {
 
     public void teleportPlayers() {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            if(player != null && player.isOnline()) {
+            if (player != null && player.isOnline()) {
                 teleportToFirstRoom(player);
             }
         });
     }
+
     public void endGame() {
         gameScoreboard.removeScoreboard(getGame());
     }
