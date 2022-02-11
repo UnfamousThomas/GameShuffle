@@ -3,6 +3,7 @@ package us.unfamousthomas.gameshuffle.listeners;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.game.RoomType;
@@ -23,6 +24,10 @@ public class PlayerDamageListener implements Listener {
         }
 
         if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+            return;
+        }
+
+        if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
             return;
         }
 
@@ -47,5 +52,12 @@ public class PlayerDamageListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void entityDamageEvent(EntityDamageByEntityEvent e) {
+
+        if(e.getDamager() instanceof Player) return;
+        e.setCancelled(true);
     }
 }

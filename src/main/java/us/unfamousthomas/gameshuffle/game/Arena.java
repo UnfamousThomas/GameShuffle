@@ -103,7 +103,7 @@ public class Arena {
         Room room = getRandomRoom();
         Room currentRoom = currentRoomMap.get(player.getUniqueId());
         if (room.getId().equals(currentRoom.getId())) {
-            getNewRoomOldPlayer(player);
+            return getNewRoomOldPlayer(player);
         }
 
         return room;
