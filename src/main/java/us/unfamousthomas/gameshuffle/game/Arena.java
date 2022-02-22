@@ -9,6 +9,8 @@ import us.unfamousthomas.gameshuffle.GameShuffle;
 import us.unfamousthomas.gameshuffle.events.RoomChangeEvent;
 import us.unfamousthomas.gameshuffle.managers.scoreboard.GameScoreboard;
 import us.unfamousthomas.gameshuffle.mongo.objects.Room;
+import us.unfamousthomas.gameshuffle.utils.LogLevel;
+import us.unfamousthomas.gameshuffle.utils.Logger;
 
 import java.util.*;
 
@@ -81,12 +83,7 @@ public class Arena {
     }
 
     public void skipLevel(Player player) {
-        Room room = getRandomRoom();
-        if(currentRoomMap.containsKey(player)) {
-            if (room.getId().equals(currentRoomMap.get(player).getId())) {
-                skipLevel(player);
-            }
-        }
+        Room room = getRandomRoomCheck(player);
         currentRoomMap.put(player.getUniqueId(), room);
         player.setBedSpawnLocation(room.getSpawnLocation(), true);
         player.teleport(room.getSpawnLocation());
@@ -108,10 +105,21 @@ public class Arena {
 
         return room;
     }
+    private Room getRandomRoomCheck(Player p) {
+        Room room = getRandomRoom();
+        if(currentRoomMap.containsKey(p.getUniqueId())) {
+            Room previousRoom = currentRoomMap.get(p.getUniqueId());
+            if (room.getId().equals(previousRoom.getId())) {
+                return getRandomRoomCheck(p);
+            }
+        }
 
+        return room;
+    }
     public Room getRandomRoom() {
-        Random rand = new Random();
-        return roomList.get(rand.nextInt(roomList.size()));
+        int index = new Random().nextInt(roomList.size());
+        Logger.log(LogLevel.INFO, "Room generated: " + roomList.get(index).getId());
+        return roomList.get(index);
     }
 
     public Room getCurrentRoom(UUID uuid) {

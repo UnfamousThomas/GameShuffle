@@ -28,16 +28,21 @@ public class PlayerInteractListener implements Listener {
 
                         ItemStack vili =new ItemStackBuilder(Material.WHITE_WOOL).withName("Jäta Vahele").buildStack();
 
-                            e.getPlayer().getInventory().remove(vili);
+                        for(ItemStack m : e.getPlayer().getInventory().getContents()) {
+                             if (m != null && m.isSimilar(vili)) {
+                                e.getPlayer().getInventory().remove(vili);
+                                e.getPlayer().getInventory().removeItem(vili);
+                                 e.getPlayer().updateInventory();
+                             }
+                        }
 
-                        e.getPlayer().updateInventory();
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 e.getPlayer().getInventory().addItem(vili);
                                 e.getPlayer().updateInventory();
                             }
-                        }.runTaskLater(GameShuffle.getInstance(), 20L * 7);
+                        }.runTaskLater(GameShuffle.getInstance(), 20L * 7 + 5);
                     }
             }
         }
